@@ -1,0 +1,69 @@
+# 日本語
+prefix: '&f&l[&6&lWarForgeCore&f&l] &r'
+
+game:
+  start: '&a&l試合開始！ &7モード: &f{mode}'
+  end: '&6&l試合終了！'
+  winner: '{winner} &f勝利！'
+  draw: '&e引き分け！'
+  player-join: '&f{player} &7が参加！ &e{current}/{max}'
+  player-leave: '&f{player} &7が退出。'
+  respawn: '&aリスポーン！'
+  countdown-start: '&a試合が &e{seconds}秒 &a後に始まります！'
+  countdown-cancel: '&c人数が足りないためカウントダウンをキャンセルしました。'
+  no-arena: '&cアリーナが見つかりません。'
+  already-in-game: '&cすでに試合に参加しています。'
+
+kill:
+  message: '&c{victim} &7が &a{killer} &7に倒された{suffix}'
+  headshot-suffix: ' &6&l[HEADSHOT]'
+  streak-3: '&eKILLING SPREE！ &f{player} &7が3連続キル！'
+  streak-5: '&6RAMPAGE！ &f{player} &7が5連続キル！'
+  streak-7: '&cUNSTOPPABLE！ &f{player} &7が7連続キル！'
+  streak-10: '&dGODLIKE！ &f{player} &7が10連続キル！'
+  streak-15: '&6&lLEGENDARY！ &f{player} &7が15連続キル！'
+
+goldrush:
+  start: '&6ゴールドラッシュ開始！ &7最も多くの金を集めろ！'
+  pickup: '&e金を拾った！ &7所持: &6{amount}個'
+  drop: '&c{victim} &7から金を &e{amount}個 &7奪った！'
+  leaderboard-announce: '&6[順位] &f{rank1} &e{g1}個 &7| &f{rank2} &e{g2}個 &7| &f{rank3} &e{g3}個'
+  time-warning: '&c残り{seconds}秒！ &7リード: &f{leader} &e{gold}個'
+
+heist:
+  start: '&6&lHeist 開始！ &7相手のネクサスを掘って金を奪え！'
+  mine: '&e採掘！ &7所持: &6{amount}個 &7/ 自陣に持ち帰れ！'
+  deposit: '&a{amount}ゴールドを持ち帰った！'
+  killed-drop: '&f{victim} &7が倒され &e{amount}ゴールド &7がドロップ！'
+  own-nexus: '&c自陣のネクサスは掘れません！'
+  no-gold: '&c持ち帰るゴールドがありません！'
+  score: '&cRed: {red} &7| &9Blue: {blue} &7| 目標: {goal}'
+  win-team: '{team} &f勝利！'
+
+arena:
+  created: '&aアリーナ &f{name} &aを作成しました！ ID: &f{id}'
+  deleted: '&aアリーナ &f{id} &aを削除しました。'
+  not-found: '&cアリーナが見つかりません: &f{id}'
+  setup-incomplete: '&c設定が不完全です: &f{missing}'
+  wand-given: '&aワンドを受け取りました。左クリック=地点1 / 右クリック=地点2'
+  spawn-set: '&aスポーン地点を設定しました。'
+  need-wool: '&c{team}チームのスポーン地点に{color}の羊毛が必要です。'
+
+rank:
+  up: '&a&l🎉 RANK UP! {rank} に昇格！'
+  down: '&c&l▼ RANK DOWN {rank} に降格。'
+  points: '&7ランクポイント: {sign}{delta} &8({total}pt) {rank}'
+
+auction:
+  list: '&6[オークション] &f{seller} &7が &f{item} &7を &e{price} &7から出品！'
+  bid: '&6[オークション] &f{bidder} &7が &f{item} &7に &e{amount} &7で入札！'
+  sold: '&6[オークション] &f{buyer} &7が &f{item} &7を &e{price} &7で落札！'
+  expired-seller: '&e{item} &7は入札なしで期限切れになりました。'
+  expired-winner: '&6[オークション] &f{item} &7の落札おめでとうございます！'
+
+error:
+  no-permission: '&c権限がありません。'
+  player-only: '&cプレイヤーのみ使用可能です。'
+  invalid-args: '&c使用法: &f{usage}'
+  no-economy: '&cVaultが有効ではありません。'
+  insufficient-funds: '&c残高が不足しています。 &7(残高: {balance})'

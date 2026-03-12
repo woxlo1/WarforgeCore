@@ -1,0 +1,83 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.warforge'
+version = '1.0.0-BETA'
+
+// ────────────────────────────────────────────────────────────────
+//  ビルド方針:
+//  - Java 17でビルド（switch expression, text block等が使える）
+//  - APIは Spigot 1.16.5 ベースでコンパイル
+//    → 1.16.5〜1.21 の全バージョンで動くAPIのみ使用
+//  - バージョン差異は VersionAdapter.java で吸収
+// ────────────────────────────────────────────────────────────────
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url 'https://repo.codemc.io/repository/maven-releases/' }
+    maven { url 'https://repo.codemc.io/repository/maven-snapshots/' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    // ──────────────────────────────────────────────────────
+    //  コンパイルベースは Spigot 1.16.5
+    //  ※ 1.16.5には Adventure APIが入っていないため
+    //    meta.displayName(Component) などはコンパイルエラー
+    //    → VersionAdapter で全部 Reflection 経由に変換済み
+    // ──────────────────────────────────────────────────────
+    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    // PacketEvents 2.x — 1.8〜1.21 対応
+    implementation 'com.github.retrooper:packetevents-spigot:2.4.0'
+
+    // Vault
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+
+    // WeaponMechanics (optional, softdepend)
+    // compileOnly 'com.github.WeaponMechanics:WeaponMechanics:4.5.0'
+
+    // HikariCP — 4.x は Java 8+ 対応
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+}
+
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        freeCompilerArgs = ['-Xjvm-default=all']
+    }
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    relocate 'com.zaxxer.hikari',                'com.warforge.libs.hikari'
+    relocate 'com.github.retrooper.packetevents', 'com.warforge.libs.packetevents'
+    relocate 'io.github.retrooper.packetevents',  'com.warforge.libs.packetevents2'
+    relocate 'kotlin',                            'com.warforge.libs.kotlin'
+    relocate 'org.jetbrains.annotations',         'com.warforge.libs.annotations'
+    relocate 'org.jetbrains.kotlin',              'com.warforge.libs.kotlin2'
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+}
+
+build.dependsOn shadowJar

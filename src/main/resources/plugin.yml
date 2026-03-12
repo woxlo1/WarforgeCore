@@ -1,0 +1,74 @@
+name: WarforgeCore
+version: '1.0.0-BETA'
+main: com.warforge.core.WarforgeCore
+api-version: '1.16'
+description: Warforge FPS Core Plugin
+authors: [ woxlo1 ]
+website: https://github.com/woxlo1
+
+softdepend: [ Vault, WeaponMechanics ]
+
+commands:
+  warforge:
+    description: メインコマンド
+    aliases: [ wf ]
+    usage: /warforge <reload|stats|admin>
+  gun:
+    description: 銃管理
+    usage: /gun <give|list|info|reload>
+    permission: warforge.admin
+  arena:
+    description: アリーナ管理
+    usage: /arena <create|delete|setspawn|...>
+    permission: warforge.admin
+  auction:
+    description: オークション
+    aliases: [ auc ]
+    usage: /auction [sell|bid|buy|cancel|list]
+  join:
+    description: 試合に参加
+    usage: /join [アリーナ名/ID]
+  leave:
+    description: 試合を退出
+    usage: /leave
+  stats:
+    description: 統計表示
+    usage: /stats [プレイヤー名]
+  rank:
+    description: ランク表示
+    aliases: [ r ]
+    usage: /rank [top [kills|wins|kdr]]
+  loadout:
+    description: ロードアウト管理
+    usage: /loadout [save <1-3> [名前] | load <1-3> | list]
+  mission:
+    description: デイリーミッション
+    aliases: [ missions, daily ]
+    usage: /mission
+  vote:
+    description: マップ投票
+    usage: /vote <アリーナID>
+  shop:
+    description: ショップ
+    usage: /shop
+  spectate:
+    description: 観戦モード
+    aliases: [ spec ]
+    usage: /spectate <アリーナID>
+
+permissions:
+  warforge.admin:
+    description: 管理者権限
+    default: op
+  warforge.play:
+    description: プレイ権限
+    default: true
+  warforge.auction.sell:
+    description: オークション出品
+    default: true
+  warforge.auction.bid:
+    description: オークション入札
+    default: true
+  warforge.spectate:
+    description: 観戦許可
+    default: true

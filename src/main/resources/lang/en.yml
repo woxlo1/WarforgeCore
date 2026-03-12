@@ -1,0 +1,69 @@
+# English
+prefix: '&f&l[&6&lWarForgeCore&f&l] &r'
+
+game:
+  start: '&a&lGame Start! &7Mode: &f{mode}'
+  end: '&6&lGame Over!'
+  winner: '{winner} &fWins!'
+  draw: '&eDraw!'
+  player-join: '&f{player} &7joined! &e{current}/{max}'
+  player-leave: '&f{player} &7left.'
+  respawn: '&aRespawned!'
+  countdown-start: '&aGame starts in &e{seconds} seconds!'
+  countdown-cancel: '&cCountdown cancelled - not enough players.'
+  no-arena: '&cArena not found.'
+  already-in-game: '&cYou are already in a game.'
+
+kill:
+  message: '&c{victim} &7was killed by &a{killer}{suffix}'
+  headshot-suffix: ' &6&l[HEADSHOT]'
+  streak-3: '&eKILLING SPREE! &f{player} &7is on a 3 kill streak!'
+  streak-5: '&6RAMPAGE! &f{player} &7is on a 5 kill streak!'
+  streak-7: '&cUNSTOPPABLE! &f{player} &7is on a 7 kill streak!'
+  streak-10: '&dGODLIKE! &f{player} &7is on a 10 kill streak!'
+  streak-15: '&6&lLEGENDARY! &f{player} &7is on a 15 kill streak!'
+
+goldrush:
+  start: '&6Gold Rush Start! &7Collect as much gold as possible!'
+  pickup: '&eGold picked up! &7Holding: &6{amount}'
+  drop: '&cStole &e{amount} gold &7from &c{victim}!'
+  leaderboard-announce: '&6[Rankings] &f{rank1} &e{g1} &7| &f{rank2} &e{g2} &7| &f{rank3} &e{g3}'
+  time-warning: '&c{seconds}s left! &7Leader: &f{leader} &e{gold}'
+
+heist:
+  start: '&6&lHeist Start! &7Mine the enemy nexus and bring gold back!'
+  mine: '&eMined! &7Carrying: &6{amount} &7/ Bring it back!'
+  deposit: '&aDeposited {amount} gold!'
+  killed-drop: '&f{victim} &7dropped &e{amount} gold!'
+  own-nexus: '&cYou cannot mine your own nexus!'
+  no-gold: '&cYou are not carrying any gold!'
+  score: '&cRed: {red} &7| &9Blue: {blue} &7| Goal: {goal}'
+  win-team: '{team} &fWins!'
+
+arena:
+  created: '&aArena &f{name} &acreated! ID: &f{id}'
+  deleted: '&aArena &f{id} &adeleted.'
+  not-found: '&cArena not found: &f{id}'
+  setup-incomplete: '&cSetup incomplete: &f{missing}'
+  wand-given: '&aWand received. Left click=point1 / Right click=point2'
+  spawn-set: '&aSpawn point set.'
+  need-wool: '&c{team} spawn requires {color} wool at the location.'
+
+rank:
+  up: '&a&l🎉 RANK UP! Promoted to {rank}!'
+  down: '&c&l▼ RANK DOWN Demoted to {rank}.'
+  points: '&7Rank Points: {sign}{delta} &8({total}pt) {rank}'
+
+auction:
+  list: '&6[Auction] &f{seller} &7listed &f{item} &7starting at &e{price}!'
+  bid: '&6[Auction] &f{bidder} &7bid &e{amount} &7on &f{item}!'
+  sold: '&6[Auction] &f{buyer} &7won &f{item} &7for &e{price}!'
+  expired-seller: '&e{item} &7expired with no bids.'
+  expired-winner: '&6[Auction] &fCongratulations on winning &f{item}!'
+
+error:
+  no-permission: '&cNo permission.'
+  player-only: '&cPlayers only.'
+  invalid-args: '&cUsage: &f{usage}'
+  no-economy: '&cVault is not enabled.'
+  insufficient-funds: '&cInsufficient funds. &7(Balance: {balance})'
