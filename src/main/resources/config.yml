@@ -92,37 +92,14 @@ economy:
       heist: 4000.0
 
 # ==============================
-# UIメッセージ設定
-# ==============================
-messages:
-  game-start: '&a&l試合開始！ &7モード: &f{mode}'
-  game-end: '&6&l試合終了！'
-  player-join: '&f{player} &7が参加！ &e{current}/{max}'
-  player-leave: '&f{player} &7が退出。'
-  countdown-start: '&a試合が &e{seconds}秒 &a後に始まります！'
-  countdown-cancel: '&c人数が足りないためカウントダウンをキャンセルしました。'
-  kill-message: '&c{victim} &7が &a{killer} &7に倒された{headshot}'
-  headshot-suffix: ' &6[HEADSHOT]'
-  respawn-message: '&aリスポーン！'
-
-# ==============================
-# スコアボード表示設定
+# UI表示設定（テキストはlang/*.ymlで管理）
 # ==============================
 scoreboard:
   enabled: true
-  title: '&6&l✦ WarForgeCore ✦'
 
-# ==============================
-# アクションバー設定
-# ==============================
 actionbar:
   enabled: true
-  game-format: '&f&l⏱ &e{time}  &7| &f&lKill &a{kills}  &f&lDeath &c{deaths}  &f&lKDR &6{kdr}'
-  lobby-format: '&f&lKill &a{kills}  &f&lDeath &c{deaths}  &f&lKDR &6{kdr}'
 
-# ==============================
-# ボスバー設定
-# ==============================
 bossbar:
   enabled: true
 

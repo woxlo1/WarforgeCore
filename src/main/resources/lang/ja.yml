@@ -54,12 +54,12 @@ rank:
   down: '&c&l▼ RANK DOWN {rank} に降格。'
   points: '&7ランクポイント: {sign}{delta} &8({total}pt) {rank}'
 
-auction:
-  list: '&6[オークション] &f{seller} &7が &f{item} &7を &e{price} &7から出品！'
-  bid: '&6[オークション] &f{bidder} &7が &f{item} &7に &e{amount} &7で入札！'
-  sold: '&6[オークション] &f{buyer} &7が &f{item} &7を &e{price} &7で落札！'
-  expired-seller: '&e{item} &7は入札なしで期限切れになりました。'
-  expired-winner: '&6[オークション] &f{item} &7の落札おめでとうございます！'
+scoreboard:
+  title: '&6&l✦ WarForgeCore ✦'
+
+actionbar:
+  game-format: '&f&l⏱ &e{time}  &7| &f&lKill &a{kills}  &f&lDeath &c{deaths}  &f&lKDR &6{kdr}'
+  lobby-format: '&f&lKill &a{kills}  &f&lDeath &c{deaths}  &f&lKDR &6{kdr}'
 
 error:
   no-permission: '&c権限がありません。'
