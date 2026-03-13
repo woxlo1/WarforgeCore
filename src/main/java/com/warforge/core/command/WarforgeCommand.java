@@ -43,10 +43,9 @@ public class WarforgeCommand implements CommandExecutor {
                 plugin.reloadConfig();
                 plugin.getConfigManager().reload();
                 plugin.getEconomyConfig().reload();
-                plugin.getGunManager().loadGuns();
                 sender.sendMessage(plugin.getConfigManager().getMessage("game-start")
                     .replace("{mode}", "リロード完了"));
-                sender.sendMessage("§a設定・銃データをリロードしました！");
+                sender.sendMessage("§a設定をリロードしました！");
             }
             case "stats" -> {
                 if (!(sender instanceof Player player)) {

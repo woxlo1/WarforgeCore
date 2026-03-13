@@ -263,12 +263,8 @@ public class Heist extends GameMode {
     private void saveInventory(Player player) {
         ItemStack[] contents = player.getInventory().getContents().clone();
         savedInventory.put(player.getUniqueId(), contents);
-        // 銃だけ取り上げ
-        for (int i = 0; i < player.getInventory().getSize(); i++) {
-            if (plugin.getGunItemManager().isGun(player.getInventory().getItem(i))) {
-                player.getInventory().setItem(i, null);
-            }
-        }
+        // インベントリをクリア
+        player.getInventory().clear();
     }
 
     /** 銃インベントリ復元 */
