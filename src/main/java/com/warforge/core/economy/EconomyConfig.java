@@ -3,9 +3,6 @@ package com.warforge.core.economy;
 import com.warforge.core.WarforgeCore;
 import com.warforge.core.util.Messages;
 
-/**
- * 経済設定へのアクセサ - 実際の値はConfigManagerから取得
- */
 public class EconomyConfig {
 
     private final WarforgeCore plugin;

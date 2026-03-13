@@ -21,80 +21,63 @@ settings:
 # ロビー設定
 # ==============================
 lobby:
-  countdown: 30              # カウントダウン秒数
-  countdown-full: 10         # 満員時の短縮秒数
-  countdown-notify: [10, 5, 4, 3, 2, 1]  # 通知するカウント
+  countdown: 30
+  countdown-full: 10
+  countdown-notify: [10, 5, 4, 3, 2, 1]
 
 # ==============================
 # ゲーム共通設定
 # ==============================
 game:
-  respawn-delay: 3           # リスポーン待機秒数（実際に適用）
+  respawn-delay: 3
   max-players-per-arena: 16
   min-players-to-start: 2
-  # ゲーム中の制限
-  block-break: false         # 試合中ブロック破壊禁止
-  block-place: false         # 試合中ブロック設置禁止
-  hunger: false              # 試合中空腹ゲージ減少禁止
-  drop-items-on-death: false # 死亡時アイテムドロップ禁止
-  keep-inventory: true       # 死亡時インベントリ保持
+  block-break: false
+  block-place: false
+  hunger: false
+  drop-items-on-death: false
+  keep-inventory: true
 
 # ==============================
 # ゲームモード別設定
 # ==============================
 modes:
   tdm:
-    duration: 300      # 試合時間（秒）
-    kill-limit: 30     # キル上限
+    duration: 300
+    kill-limit: 30
     respawn-delay: 3
 
   battle-royale:
     duration: 600
-    respawn-delay: 0   # BRはリスポーンなし（0=なし）
-    shrink-enabled: false  # TODO: ボーダー縮小
+    respawn-delay: 0
 
   domination:
     duration: 300
-    max-score: 200         # 勝利スコア
-    capture-speed: 0.05    # 1tick(0.5秒)ごとの制圧進行速度
-    score-per-tick: 1      # 拠点制圧中の1tickごとのスコア加算
+    max-score: 200
+    capture-speed: 0.05
+    score-per-tick: 1
     respawn-delay: 3
 
   gold-rush:
     duration: 240
-    gold-spawn-interval: 20  # ゴールドスポーン間隔（秒）
-    kill-drop-rate: 0.65     # キル時のドロップ率（0.6=60%, 0.7=70%）
-    announce-interval: 30    # 順位発表間隔（秒）
+    gold-spawn-interval: 20
+    kill-drop-rate: 0.65
+    announce-interval: 30
     respawn-delay: 3
 
   heist:
     duration: 300
-    win-gold: 100          # 先取ゴールド数（アリーナ別設定で上書き可）
-    gold-per-mine: 5       # 1回掘るごとのゴールド（アリーナ別設定で上書き可）
-    kill-drop-rate: 0.65   # キル時のドロップ率（0.6〜0.7のランダム幅）
+    win-gold: 100
+    gold-per-mine: 5
+    kill-drop-rate: 0.65
     respawn-delay: 3
-
-# ==============================
-# 銃設定
-# ==============================
-guns:
-  damage-enabled: true
-  headshot-enabled: true         # ヘッドショット有効
-  leg-damage-enabled: true       # 足へのダメージ有効
-  armor-penetration-enabled: true
-  drop-off-enabled: true         # 距離減衰有効
-  friendly-fire: false           # 誤射ダメージ
-  recoil-enabled: true           # リコイル有効
-  spread-enabled: true           # 弾拡散有効
-  reload-enabled: true           # リロード有効
-  global-damage-multiplier: 1.0  # 全体ダメージ倍率
 
 # ==============================
 # Vault経済設定（円）
 # ==============================
 economy:
   enabled: true
-  currency-symbol: '¥'          # 通貨記号
+  currency-symbol: '¥'
   rewards:
     kill: 500.0
     headshot-bonus: 200.0
@@ -109,19 +92,6 @@ economy:
       heist: 4000.0
 
 # ==============================
-# オークション設定
-# ==============================
-auction:
-  enabled: true
-  tax-rate: 0.05             # 手数料率（0.05 = 5%）
-  max-listings: 5            # 1人最大出品数
-  duration-hours: 1          # 出品期間（時間）
-  min-price: 1.0             # 最低出品価格
-  bid-increment: 1.0         # 最低入札増加額
-  notify-all: true           # 出品・落札を全体通知
-  allow-gun-listing: true    # 銃の出品を許可
-
-# ==============================
 # UIメッセージ設定
 # ==============================
 messages:
@@ -134,9 +104,6 @@ messages:
   kill-message: '&c{victim} &7が &a{killer} &7に倒された{headshot}'
   headshot-suffix: ' &6[HEADSHOT]'
   respawn-message: '&aリスポーン！'
-  no-ammo: '&c弾切れ！'
-  reloading: '&eリロード中... &7({seconds}秒)'
-  reload-done: '&aリロード完了！ &f{current}/{max}'
 
 # ==============================
 # スコアボード表示設定
@@ -144,23 +111,6 @@ messages:
 scoreboard:
   enabled: true
   title: '&6&l✦ WarForgeCore ✦'
-  lobby:
-    lines:
-      - '&8▸ &7Version &f{version}'
-      - '&8▸ &7Mode &aLobby'
-      - '&r'
-      - '&8▸ &7Players &f{online}'
-      - '&r '
-      - '&8github.com/woxlo1'
-  game:
-    lines:
-      - '&8▸ &7Mode &b{mode}'
-      - '&r'
-      - '&8▸ &7Team &f{team}'
-      - '&r '
-      - '&8▸ &7Version &f{version}'
-      - '&r  '
-      - '&8github.com/woxlo1'
 
 # ==============================
 # アクションバー設定
@@ -169,17 +119,12 @@ actionbar:
   enabled: true
   game-format: '&f&l⏱ &e{time}  &7| &f&lKill &a{kills}  &f&lDeath &c{deaths}  &f&lKDR &6{kdr}'
   lobby-format: '&f&lKill &a{kills}  &f&lDeath &c{deaths}  &f&lKDR &6{kdr}'
-  ammo-format: '{rarity}{gun} &f| &e{current}&7/{max}  &7予備: &f{reserve}'
 
 # ==============================
 # ボスバー設定
 # ==============================
 bossbar:
   enabled: true
-  timer-format: '&f{mode} &7| &e{time}'
-  players-format: '&c残りプレイヤー &f{alive} / {total}'
-  gold-format: '&6ゴールドラッシュ &f| &e{leader} &7: {collected} / {goal}'
-  domination-format: '&c赤 {red} &7vs &9青 {blue} &7| 目標: &f{max}'
 
 # ==============================
 # ランク設定
@@ -203,21 +148,21 @@ killstreak:
 # ==============================
 missions:
   enabled: true
-  daily-count: 3     # 1日に割り当てるミッション数
+  daily-count: 3
 
 # ==============================
 # 観戦設定
 # ==============================
 spectator:
   enabled: true
-  allow-chat: false   # 観戦中のチャット禁止
+  allow-chat: false
 
 # ==============================
 # 投票設定
 # ==============================
 vote:
   enabled: true
-  duration: 30        # 投票時間（秒）
+  duration: 30
 
 # ==============================
 # ログ設定
@@ -227,12 +172,11 @@ logging:
   kills: true
   economy: true
   games: true
-  auctions: true
 
 # ==============================
 # WeaponMechanics統合設定
 # ==============================
 weapon-mechanics:
-  enabled: true    # WeaponMechanicsプラグインがある場合はtrueに
-  # trueにすると自前の銃システムを無効にしWeaponMechanicsに委譲
-  # WeaponMechanicsのweaponタイトルでgun_idとして認識
+  enabled: true
+  # WeaponMechanicsプラグインの武器をそのまま使用
+  # キットシステムなし: 各プレイヤーが自分の武器を持参

@@ -18,23 +18,23 @@ public class LoadoutCommand implements CommandExecutor {
         if (!(sender instanceof Player player)) {
             sender.sendMessage("プレイヤーのみ使用可能です。"); return true;
         }
-        
+
         if (args.length == 0 || args[0].equalsIgnoreCase("list")) {
-            plugin.getLoadoutManager().list(player); return true;
+            plugin.getLoadoutManager().list(player);
+            return true;
         }
-        if (args[0].equalsIgnoreCase("save") && args.length >= 2) {
-            try { int slot = Integer.parseInt(args[1]);
-                String name = args.length >= 3 ? args[2] : "loadout" + slot;
+        if (args[0].equalsIgnoreCase("save") && args.length >= 3) {
+            try {
+                int slot = Integer.parseInt(args[1]);
+                String name = args[2];
                 plugin.getLoadoutManager().save(player, slot, name);
-            } catch (NumberFormatException e) { player.sendMessage(Messages.INSTANCE.prefixed("&c数字を入力してください。")); }
+            } catch (NumberFormatException e) {
+                player.sendMessage(Messages.INSTANCE.prefixed("&cスロットには数字を入力してください。"));
+            }
             return true;
         }
-        if (args[0].equalsIgnoreCase("load") && args.length >= 2) {
-            try { plugin.getLoadoutManager().load(player, Integer.parseInt(args[1])); }
-            catch (NumberFormatException e) { player.sendMessage(Messages.INSTANCE.prefixed("&c数字を入力してください。")); }
-            return true;
-        }
-        player.sendMessage(Messages.INSTANCE.prefixed("&7/loadout [save <1-3> [名前] | load <1-3> | list]"));
+
+        player.sendMessage(Messages.INSTANCE.prefixed("&7/loadout [save <1-3> <名前> | list]"));
         return true;
     }
 }

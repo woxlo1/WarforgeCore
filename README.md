@@ -12,8 +12,13 @@ FPS戦闘プラグイン for PaperMC 1.19〜1.21
 - MySQL 5.7+
 
 ## オプション依存
-- [WeaponMechanics](https://github.com/WeaponMechanics/WeaponMechanics) - より本格的な銃システム  
-  `config.yml` → `weapon-mechanics.enabled: true` で有効化
+- [WeaponMechanics](https://github.com/WeaponMechanics/WeaponMechanics) — 武器システム  
+  プレイヤーが自分の武器を持参して戦う設計。キットシステムなし。
+- [CrazyAuctions](https://www.spigotmc.org/resources/crazyauctions.16180/) — オークションシステム  
+  アイテム売買はCrazyAuctionsに委譲。`/auction` コマンドはCrazyAuctions側が提供。
+
+> WarforgeCoreは武器・オークション機能を自前実装せず、  
+> 実績ある外部プラグインに委譲することで安定性と保守性を高めています。
 
 ## アリーナ作成手順
 
@@ -40,15 +45,15 @@ FPS戦闘プラグイン for PaperMC 1.19〜1.21
 |---------|------|
 | `/join [ID]` | 試合参加 |
 | `/leave` | 退出 |
-| `/shop` | 武器ショップ |
-| `/auction` | オークション |
 | `/stats [プレイヤー]` | 統計 |
 | `/rank [top]` | ランク |
-| `/loadout [save/load/list]` | ロードアウト |
+| `/loadout [save/load/list]` | ロードアウト（WeaponMechanics連携） |
 | `/mission` | デイリーミッション |
 | `/spectate <ID>` | 観戦 |
 | `/vote <ID>` | マップ投票 |
 | `/wf admin` | 管理パネル |
+
+> `/shop` と `/auction` はそれぞれ WeaponMechanics / CrazyAuctions が提供します。
 
 ## 多言語対応
 `plugins/WarforgeCore/lang/` に言語ファイルを追加
@@ -71,5 +76,15 @@ FPS戦闘プラグイン for PaperMC 1.19〜1.21
 - 残り時間で全額ドロップに近づく設計
 
 ## WeaponMechanics連携
-既存の自作銃システムを無効化し、WeaponMechanicsの武器を使用可能。
-各プレイヤーが自分の武器を持参して戦う設計（キットシステムなし）。
+WarforgeCoreは武器の管理をWeaponMechanicsに完全委譲しています。  
+プレイヤーは自分のWeaponMechanics武器を持参して試合に参加する設計です。
+
+- WarforgeCore側の自作銃システム（GunManager等）は廃止済み
+- ロードアウト保存（`/loadout save`）はスロット名のみ記録し、武器の実体はWeaponMechanicsが管理
+- `config.yml` → `weapon-mechanics.enabled: true` でWeaponMechanicsの存在を明示
+
+## CrazyAuctions連携
+アイテムのオークション機能はCrazyAuctionsプラグインに完全委譲しています。  
+WarforgeCore内のAuctionManagerは廃止済みです。
+
+CrazyAuctionsを導入するだけで `/auction` コマンドが使えるようになります。

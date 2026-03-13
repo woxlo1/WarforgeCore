@@ -2,7 +2,6 @@ package com.warforge.core.admin;
 
 import com.warforge.core.WarforgeCore;
 import com.warforge.core.arena.Arena;
-import com.warforge.core.economy.VaultManager;
 import com.warforge.core.game.GameMode;
 import com.warforge.core.game.lobby.GameLobby;
 import com.warforge.core.compat.VersionAdapter;
@@ -37,8 +36,7 @@ public class AdminGUI implements Listener {
         // ヘッダー情報
         inv.setItem(0, buildItem(Material.PAPER, "&f&lサーバー状況", List.of(
             "&7オンライン: &f" + Bukkit.getOnlinePlayers().size() + "人",
-            "&7アクティブ試合: &f" + plugin.getGameManager().getActiveGames().size(),
-            "&7オークション: &f" + plugin.getAuctionManager().getActiveAuctions().size() + "件"
+            "&7アクティブ試合: &f" + plugin.getGameManager().getActiveGames().size()
         )));
 
         // リロードボタン
@@ -88,7 +86,6 @@ public class AdminGUI implements Listener {
 
         if (name.contains("設定リロード")) {
             plugin.getConfigManager().reload();
-            plugin.getGunManager().loadGuns();
             admin.sendMessage("§a全設定をリロードしました！");
             open(admin);
             return;
@@ -117,7 +114,7 @@ public class AdminGUI implements Listener {
                 admin.closeInventory();
                 admin.sendMessage("§7アリーナ設定: /arena info " + arenaId);
             }
-            open(admin); // GUIを更新
+            open(admin);
         }
     }
 

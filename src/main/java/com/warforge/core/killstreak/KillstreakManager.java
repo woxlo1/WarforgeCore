@@ -33,7 +33,6 @@ public class KillstreakManager {
         UUID uuid = player.getUniqueId();
         int streak = streaks.merge(uuid, 1, Integer::sum);
 
-        // ストリークアナウンス
         for (KillstreakReward reward : REWARDS) {
             if (streak == reward.killCount()) {
                 announceStreak(player, streak, reward);
@@ -42,7 +41,6 @@ public class KillstreakManager {
             }
         }
 
-        // 通常ストリーク通知
         if (streak >= 3) {
             VersionAdapter.sendActionBar(player, "&e" + streak + " キルストリーク継続中！");
         }
@@ -51,25 +49,19 @@ public class KillstreakManager {
     public void onDeath(Player player) {
         int streak = streaks.getOrDefault(player.getUniqueId(), 0);
         if (streak >= 5) {
-            // 終了を周知
             notifyGamePlayers(player,
                 "&c" + player.getName() + " &7の " + streak + " キルストリークが終了！");
         }
         streaks.put(player.getUniqueId(), 0);
     }
 
-    public void reset(UUID uuid) {
-        streaks.remove(uuid);
-    }
+    public void reset(UUID uuid) { streaks.remove(uuid); }
 
-    public int getStreak(UUID uuid) {
-        return streaks.getOrDefault(uuid, 0);
-    }
+    public int getStreak(UUID uuid) { return streaks.getOrDefault(uuid, 0); }
 
     private void announceStreak(Player player, int streak, KillstreakReward reward) {
         VersionAdapter.sendTitle(player, reward.color() + streak + " KILL STREAK", "&f" + reward.name(), 5, 40, 10);
         player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 0.8f, 1.5f);
-
         notifyGamePlayers(player,
             reward.color() + "&l" + reward.name() + " &r" + reward.color() +
             "! &f" + player.getName() + " &7が " + streak + " キル達成！");
@@ -78,11 +70,10 @@ public class KillstreakManager {
     private void applyReward(Player player, KillstreakType type) {
         switch (type) {
             case SPEED_BOOST -> {
-                player.addPotionEffect(new PotionEffect(resolvePotion("SPEED", "SPEED"), 200, 1));
+                player.addPotionEffect(new PotionEffect(resolvePotion("SPEED"), 200, 1));
                 player.sendMessage(Messages.INSTANCE.prefixed("&e速度アップ！ (10秒)"));
             }
             case UAV -> {
-                // 近くのプレイヤーに位置を通知
                 player.sendMessage(Messages.INSTANCE.prefixed("&b敵の位置情報を取得！"));
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     plugin.getGameManager().getPlayerGame(player.getUniqueId()).ifPresent(game ->
@@ -98,11 +89,10 @@ public class KillstreakManager {
             }
             case HEAL -> {
                 player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + 10));
-                player.addPotionEffect(new PotionEffect(resolvePotion("REGENERATION", "REGENERATION"), 100, 1));
+                player.addPotionEffect(new PotionEffect(resolvePotion("REGENERATION"), 100, 1));
                 player.sendMessage(Messages.INSTANCE.prefixed("&aHP回復！"));
             }
             case AIRSTRIKE -> {
-                // ターゲット近くに落雷エフェクト（擬似エアストライク）
                 player.sendMessage(Messages.INSTANCE.prefixed("&c💥 エアストライク発動！ &7(向いている方向に攻撃)"));
                 org.bukkit.block.Block targetBlock = player.getTargetBlock(null, 50);
                 Location target = (targetBlock != null && !targetBlock.getType().isAir())
@@ -116,7 +106,6 @@ public class KillstreakManager {
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         target.getWorld().strikeLightningEffect(loc);
                         target.getWorld().createExplosion(loc, 0f, false, false);
-                        // 範囲内の敵にダメージ
                         loc.getWorld().getNearbyEntities(loc, 3, 3, 3).forEach(e -> {
                             if (e instanceof Player hit && !hit.equals(player)) {
                                 hit.damage(8.0, player);
@@ -126,7 +115,7 @@ public class KillstreakManager {
                 }
             }
             case LEGENDARY -> {
-                player.addPotionEffect(new PotionEffect(resolvePotion("SPEED", "SPEED"), 300, 2));
+                player.addPotionEffect(new PotionEffect(resolvePotion("SPEED"), 300, 2));
                 player.addPotionEffect(new PotionEffect(resolvePotion("STRENGTH", "INCREASE_DAMAGE"), 300, 1));
                 player.addPotionEffect(new PotionEffect(resolvePotion("RESISTANCE", "DAMAGE_RESISTANCE"), 300, 1));
                 player.sendMessage(Messages.INSTANCE.prefixed("&6&l✦ LEGENDARY モード発動！ (15秒)"));
@@ -150,25 +139,21 @@ public class KillstreakManager {
                 if (t != null) return t;
             } catch (Exception ignored) {}
         }
-        // 最低限 SPEED を返す
         return PotionEffectType.SPEED;
     }
 
-        private static final class KillstreakReward {
-    private final int killCount;
-    private final String name;
-    private final String color;
-    private final KillstreakType type;
-    KillstreakReward(int killCount, String name, String color, KillstreakType type) {
-        this.killCount = killCount;
-        this.name = name;
-        this.color = color;
-        this.type = type;
-    }
-    public int killCount() { return killCount; }
-    public String name() { return name; }
-    public String color() { return color; }
-    public KillstreakType type() { return type; }
+    private static final class KillstreakReward {
+        private final int killCount;
+        private final String name;
+        private final String color;
+        private final KillstreakType type;
+        KillstreakReward(int killCount, String name, String color, KillstreakType type) {
+            this.killCount = killCount; this.name = name; this.color = color; this.type = type;
+        }
+        public int killCount() { return killCount; }
+        public String name() { return name; }
+        public String color() { return color; }
+        public KillstreakType type() { return type; }
     }
 
     private enum KillstreakType { SPEED_BOOST, UAV, HEAL, AIRSTRIKE, LEGENDARY }

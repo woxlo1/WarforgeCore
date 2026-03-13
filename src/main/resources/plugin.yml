@@ -13,18 +13,10 @@ commands:
     description: メインコマンド
     aliases: [ wf ]
     usage: /warforge <reload|stats|admin>
-  gun:
-    description: 銃管理
-    usage: /gun <give|list|info|reload>
-    permission: warforge.admin
   arena:
     description: アリーナ管理
     usage: /arena <create|delete|setspawn|...>
     permission: warforge.admin
-  auction:
-    description: オークション
-    aliases: [ auc ]
-    usage: /auction [sell|bid|buy|cancel|list]
   join:
     description: 試合に参加
     usage: /join [アリーナ名/ID]
@@ -40,7 +32,7 @@ commands:
     usage: /rank [top [kills|wins|kdr]]
   loadout:
     description: ロードアウト管理
-    usage: /loadout [save <1-3> [名前] | load <1-3> | list]
+    usage: /loadout [save <1-3> <名前> | list]
   mission:
     description: デイリーミッション
     aliases: [ missions, daily ]
@@ -48,9 +40,6 @@ commands:
   vote:
     description: マップ投票
     usage: /vote <アリーナID>
-  shop:
-    description: ショップ
-    usage: /shop
   spectate:
     description: 観戦モード
     aliases: [ spec ]
@@ -62,12 +51,6 @@ permissions:
     default: op
   warforge.play:
     description: プレイ権限
-    default: true
-  warforge.auction.sell:
-    description: オークション出品
-    default: true
-  warforge.auction.bid:
-    description: オークション入札
     default: true
   warforge.spectate:
     description: 観戦許可
