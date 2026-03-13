@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.9.22'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'maven-publish'
 }
 
 group = 'com.warforge'
@@ -81,3 +82,24 @@ processResources {
 }
 
 build.dependsOn shadowJar
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/woxlo1/WarforgeCore")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from components.java
+            groupId = 'com.warforge'
+            artifactId = 'WarforgeCore'
+            version = '1.0.0-BETA'
+        }
+    }
+}

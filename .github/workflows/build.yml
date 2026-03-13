@@ -48,10 +48,9 @@ jobs:
       # -------------------------------------------------------
       # GitHub Packages への publish
       # main ブランチへの push 時のみ実行
-      # 準備ができたら if: コメントを外す
       # -------------------------------------------------------
-      # - name: Publish to GitHub Packages
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: ./gradlew publish
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to GitHub Packages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
