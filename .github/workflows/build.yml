@@ -37,6 +37,9 @@ jobs:
 
       - name: Build with Gradle (MC ${{ matrix.minecraft }})
         run: ./gradlew build -PminecraftVersion=${{ matrix.minecraft }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
 
       - name: Upload jar artifact
         uses: actions/upload-artifact@v4
