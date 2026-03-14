@@ -41,7 +41,7 @@ public class LangManager {
 
     /**
      * キーからメッセージを取得し、プレースホルダーを置換して返す。
-     * &カラーコードは colorize() で §に変換される。
+     * &カラーコードは colorize() で正しく §に変換される。
      */
     public String get(String key, String... placeholders) {
         String msg = lang.getString(key, "&c[Missing: " + key + "]");
@@ -61,6 +61,11 @@ public class LangManager {
         return get(key, placeholders);
     }
 
+    /** prefixed Component（後方互換） */
+    public String prefixedComponent(String key, String... placeholders) {
+        return prefixed(key, placeholders);
+    }
+
     /** プレイヤーに直接送信（prefix付き） */
     public void send(Player player, String key, String... placeholders) {
         player.sendMessage(prefixed(key, placeholders));
@@ -78,9 +83,9 @@ public class LangManager {
     /**
      * &カラーコードを §に変換する。
      *
-     * 修正点: 旧実装は text.replace("&", "§") で全置換していたため、
-     * チャットメッセージ内の & 記号なども誤変換されていた。
-     * 文字単位でチェックし、有効なカラーコード文字の直前の & のみ変換する。
+     * 【修正】旧実装: text.replace("&", "§") → チャット内の & も全置換されバグが発生していた。
+     * 新実装: 文字単位で走査し、有効なカラーコード文字 (0-9, a-f, k-o, r) の
+     *         直前の & のみを §に変換する。
      */
     public static String colorize(String text) {
         if (text == null || text.isEmpty()) return "";

@@ -6,9 +6,7 @@ description: Warforge FPS Core Plugin
 authors: [ woxlo1 ]
 website: https://github.com/woxlo1
 
-# WarforgeAuction を softdepend に追加
-# → WarforgeAuction がなくてもサーバーは起動する
-softdepend: [ Vault, WeaponMechanics, WarforgeAuction ]
+softdepend: [ Vault, WeaponMechanics ]
 
 commands:
   warforge:
@@ -46,13 +44,6 @@ commands:
     description: 観戦モード
     aliases: [ spec ]
     usage: /spectate <アリーナID>
-  # WarforgeAuction がない環境でも登録しておき、
-  # AuctionBridgeCommand がプラグイン存在チェックをする
-  auction:
-    description: オークション（WarforgeAuction 必須）
-    aliases: [ auc, ah ]
-    usage: /auction [list|sell|bid|cancel|info|my]
-
 permissions:
   warforge.admin:
     description: 管理者権限

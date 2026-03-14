@@ -14,7 +14,6 @@ import com.warforge.core.listener.*;
 import com.warforge.core.loadout.LoadoutManager;
 import com.warforge.core.log.TransactionLogger;
 import com.warforge.core.manager.ArenaManager;
-
 import com.warforge.core.manager.GameManager;
 import com.warforge.core.manager.PlayerManager;
 import com.warforge.core.mission.MissionManager;
@@ -64,7 +63,6 @@ public class WarforgeCore extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
 
-        // ─── 初期化順序 ───
         this.configManager    = new ConfigManager(this);
         this.langManager      = new LangManager(this);
         this.economyConfig    = new EconomyConfig(this);
@@ -130,6 +128,7 @@ public class WarforgeCore extends JavaPlugin {
         var spectateCmd = getCommand("spectate");
         spectateCmd.setExecutor(new SpectateCommand(this));
 
+
         // ─── リスナー ───
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new HeistListener(this), this);
@@ -154,25 +153,25 @@ public class WarforgeCore extends JavaPlugin {
         getLogger().info("WarforgeCore シャットダウン完了。");
     }
 
-    public static WarforgeCore getInstance() { return instance; }
-    public ConfigManager getConfigManager() { return configManager; }
-    public DatabaseManager getDatabaseManager() { return databaseManager; }
-    public PlayerManager getPlayerManager() { return playerManager; }
-    public GameManager getGameManager() { return gameManager; }
-    public ArenaManager getArenaManager() { return arenaManager; }
-    public UIManager getUiManager() { return uiManager; }
-    public VaultManager getVaultManager() { return vaultManager; }
-    public EconomyConfig getEconomyConfig() { return economyConfig; }
-    public RankManager getRankManager() { return rankManager; }
-    public KillstreakManager getKillstreakManager() { return killstreakManager; }
-    public LoadoutManager getLoadoutManager() { return loadoutManager; }
-    public StatsManager getStatsManager() { return statsManager; }
-    public MissionManager getMissionManager() { return missionManager; }
-    public SpectatorManager getSpectatorManager() { return spectatorManager; }
-    public VoteManager getVoteManager() { return voteManager; }
-    public AdminGUI getAdminGUI() { return adminGUI; }
-    public TransactionLogger getTransactionLogger() { return transactionLogger; }
-    public LangManager getLangManager() { return langManager; }
-    public ArenaWand getArenaWand() { return arenaWand; }
-    public KillEffectManager getKillEffectManager() { return killEffectManager; }
+    public static WarforgeCore getInstance()              { return instance; }
+    public ConfigManager getConfigManager()               { return configManager; }
+    public DatabaseManager getDatabaseManager()           { return databaseManager; }
+    public PlayerManager getPlayerManager()               { return playerManager; }
+    public GameManager getGameManager()                   { return gameManager; }
+    public ArenaManager getArenaManager()                 { return arenaManager; }
+    public UIManager getUiManager()                       { return uiManager; }
+    public VaultManager getVaultManager()                 { return vaultManager; }
+    public EconomyConfig getEconomyConfig()               { return economyConfig; }
+    public RankManager getRankManager()                   { return rankManager; }
+    public KillstreakManager getKillstreakManager()       { return killstreakManager; }
+    public LoadoutManager getLoadoutManager()             { return loadoutManager; }
+    public StatsManager getStatsManager()                 { return statsManager; }
+    public MissionManager getMissionManager()             { return missionManager; }
+    public SpectatorManager getSpectatorManager()         { return spectatorManager; }
+    public VoteManager getVoteManager()                   { return voteManager; }
+    public AdminGUI getAdminGUI()                         { return adminGUI; }
+    public TransactionLogger getTransactionLogger()       { return transactionLogger; }
+    public LangManager getLangManager()                   { return langManager; }
+    public ArenaWand getArenaWand()                       { return arenaWand; }
+    public KillEffectManager getKillEffectManager()       { return killEffectManager; }
 }
