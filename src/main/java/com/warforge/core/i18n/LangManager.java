@@ -15,7 +15,6 @@ public class LangManager {
     private YamlConfiguration lang;
     private String currentLocale;
 
-    // プレイヤーごとの言語設定（将来的な個人設定用）
     private final Map<String, String> playerLocales = new HashMap<>();
 
     public LangManager(WarforgeCore plugin) {
@@ -34,7 +33,6 @@ public class LangManager {
             plugin.saveResource("lang/" + locale + ".yml", false);
         }
         if (!file.exists()) {
-            // フォールバック: ja
             file = new File(plugin.getDataFolder(), "lang/ja.yml");
             if (!file.exists()) plugin.saveResource("lang/ja.yml", false);
         }
@@ -42,35 +40,30 @@ public class LangManager {
     }
 
     /**
-     * キーからメッセージ取得（プレースホルダー対応）
-     * 例: get("kill.message", "victim", "Steve", "killer", "Alex", "suffix", "")
+     * キーからメッセージを取得し、プレースホルダーを置換して返す。
+     * &カラーコードは colorize() で §に変換される。
      */
     public String get(String key, String... placeholders) {
         String msg = lang.getString(key, "&c[Missing: " + key + "]");
         for (int i = 0; i + 1 < placeholders.length; i += 2) {
             msg = msg.replace("{" + placeholders[i] + "}", placeholders[i + 1]);
         }
-        return msg;
+        return colorize(msg);
     }
 
-    /** prefixを付けて取得 */
+    /** prefix付きで取得 */
     public String prefixed(String key, String... placeholders) {
-        return colorize(getPrefix() + get(key, placeholders));
+        return colorize(getPrefix()) + get(key, placeholders);
     }
 
-    /** Componentとして取得 */
+    /** Componentとして取得（後方互換） */
     public String component(String key, String... placeholders) {
-        return VersionAdapter.color(get(key, placeholders));
-    }
-
-    /** prefixed Component */
-    public String prefixedComponent(String key, String... placeholders) {
-        return VersionAdapter.color(prefixed(key, placeholders));
+        return get(key, placeholders);
     }
 
     /** プレイヤーに直接送信（prefix付き） */
     public void send(Player player, String key, String... placeholders) {
-        player.sendMessage(VersionAdapter.color(prefixed(key, placeholders)));
+        player.sendMessage(prefixed(key, placeholders));
     }
 
     /** アクションバーで送信 */
@@ -79,11 +72,39 @@ public class LangManager {
     }
 
     public String getPrefix() {
-        return lang.getString("prefix", "&f&l[&6&lWarForgeCore&f&l] &r");
+        return colorize(lang.getString("prefix", "&f&l[&6&lWarForgeCore&f&l] &r"));
     }
 
-    public String colorize(String text) {
-        return text.replace("&", "§");
+    /**
+     * &カラーコードを §に変換する。
+     *
+     * 修正点: 旧実装は text.replace("&", "§") で全置換していたため、
+     * チャットメッセージ内の & 記号なども誤変換されていた。
+     * 文字単位でチェックし、有効なカラーコード文字の直前の & のみ変換する。
+     */
+    public static String colorize(String text) {
+        if (text == null || text.isEmpty()) return "";
+        char[] chars = text.toCharArray();
+        StringBuilder sb = new StringBuilder(chars.length);
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '&' && i + 1 < chars.length && isColorCode(chars[i + 1])) {
+                sb.append('§');
+                sb.append(chars[++i]);
+            } else {
+                sb.append(chars[i]);
+            }
+        }
+        return sb.toString();
+    }
+
+    private static boolean isColorCode(char c) {
+        return (c >= '0' && c <= '9')
+                || (c >= 'a' && c <= 'f')
+                || (c >= 'k' && c <= 'o')
+                || c == 'r'
+                || (c >= 'A' && c <= 'F')
+                || (c >= 'K' && c <= 'O')
+                || c == 'R';
     }
 
     public String getCurrentLocale() { return currentLocale; }
