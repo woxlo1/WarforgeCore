@@ -1,5 +1,6 @@
 package com.warforge.core.ui
 
+import com.warforge.core.WarforgeCore
 import com.warforge.core.compat.BossBarCompat
 import org.bukkit.entity.Player
 
@@ -7,7 +8,7 @@ import org.bukkit.entity.Player
  * BossBarCompat に委譲するだけのラッパー。
  * Adventure BossBar を廃止 → Bukkit BossBar で 1.16.5〜1.21 対応。
  */
-class BossBarManager {
+class BossBarManager(private val plugin: WarforgeCore) {
 
     private val compat = BossBarCompat()
 
