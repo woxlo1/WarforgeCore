@@ -5,9 +5,9 @@ import com.warforge.core.game.GameMode;
 import com.warforge.core.util.Messages;
 import com.warforge.core.compat.VersionAdapter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.Location;
 
 import java.util.*;
 
@@ -63,7 +63,7 @@ public class TeamDeathmatch extends GameMode {
 
         // 5秒後にリセット
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            getOnlinePlayers().forEach(p -> removePlayer(p));
+            getOnlinePlayers().forEach(this::removePlayer);
             state = GameState.WAITING;
         }, 100L);
     }
@@ -88,8 +88,33 @@ public class TeamDeathmatch extends GameMode {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             if (players.contains(victim.getUniqueId())) {
                 VersionAdapter.sendTitle(victim, "&cリスポーン", "", 5, 20, 5);
-                // TODO: スポーン地点にテレポート
-                victim.setHealth(20.0);
+
+                // チームに応じたスポーン地点を取得
+                Team team = playerTeams.getOrDefault(victim.getUniqueId(), Team.RED);
+                Location spawn = null;
+                if (team == Team.RED) spawn = plugin.getArenaManager().getRandomRedSpawn(arenaId);
+                else if (team == Team.BLUE) spawn = plugin.getArenaManager().getRandomBlueSpawn(arenaId);
+
+                // フォールバック: アリーナ汎用スポーン -> ワールドスポーン
+                if (spawn == null) spawn = plugin.getArenaManager().getRandomSpawn(arenaId);
+                if (spawn == null) {
+                    try {
+                        if (plugin.getArenaManager().getArena(arenaId) != null) {
+                            String worldName = plugin.getArenaManager().getArena(arenaId).getWorld();
+                            if (worldName != null) {
+                                org.bukkit.World w = Bukkit.getWorld(worldName);
+                                if (w != null) spawn = w.getSpawnLocation();
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                }
+
+                if (spawn != null) victim.teleport(spawn);
+
+                // 回復と状態リセット
+                try { victim.setHealth(20.0); } catch (Exception ignored) {}
+                try { victim.setFoodLevel(20); } catch (Exception ignored) {}
+                try { victim.setFireTicks(0); } catch (Exception ignored) {}
             }
         }, 60L); // 3秒後リスポーン
     }
@@ -142,7 +167,6 @@ public class TeamDeathmatch extends GameMode {
         return result;
     }
 
-    public Team getTeam(UUID uuid) { return playerTeams.get(uuid); }
 
     public enum Team { RED, BLUE }
 }

@@ -93,40 +93,61 @@ public class WarforgeCore extends JavaPlugin {
 
         // ─── コマンド ───
         var wfCmd = getCommand("warforge");
-        wfCmd.setExecutor(new WarforgeCommand(this));
-        wfCmd.setTabCompleter(new WFTabCompleter(this, "warforge"));
+        if (wfCmd != null) {
+            wfCmd.setExecutor(new WarforgeCommand(this));
+            wfCmd.setTabCompleter(new WFTabCompleter(this, "warforge"));
+        }
 
         var arenaCmd = getCommand("arena");
-        arenaCmd.setExecutor(new ArenaCommand(this));
-        arenaCmd.setTabCompleter(new WFTabCompleter(this, "arena"));
+        if (arenaCmd != null) {
+            arenaCmd.setExecutor(new ArenaCommand(this));
+            arenaCmd.setTabCompleter(new WFTabCompleter(this, "arena"));
+        }
 
         var joinCmd = getCommand("join");
-        joinCmd.setExecutor(new JoinCommand(this, false));
-        joinCmd.setTabCompleter(new WFTabCompleter(this, "join"));
+        if (joinCmd != null) {
+            joinCmd.setExecutor(new JoinCommand(this, false));
+            joinCmd.setTabCompleter(new WFTabCompleter(this, "join"));
+        }
 
-        getCommand("leave").setExecutor(new JoinCommand(this, true));
+        var leaveCmd = getCommand("leave");
+        if (leaveCmd != null) {
+            leaveCmd.setExecutor(new JoinCommand(this, true));
+        }
 
         var statsCmd = getCommand("stats");
-        statsCmd.setExecutor(new StatsCommand(this));
-        statsCmd.setTabCompleter(new WFTabCompleter(this, "stats"));
+        if (statsCmd != null) {
+            statsCmd.setExecutor(new StatsCommand(this));
+            statsCmd.setTabCompleter(new WFTabCompleter(this, "stats"));
+        }
 
         var rankCmd = getCommand("rank");
-        rankCmd.setExecutor(new RankCommand(this));
+        if (rankCmd != null) {
+            rankCmd.setExecutor(new RankCommand(this));
+        }
 
         var loadoutCmd = getCommand("loadout");
-        loadoutCmd.setExecutor(new LoadoutCommand(this));
-        loadoutCmd.setTabCompleter(new WFTabCompleter(this, "loadout"));
+        if (loadoutCmd != null) {
+            loadoutCmd.setExecutor(new LoadoutCommand(this));
+            loadoutCmd.setTabCompleter(new WFTabCompleter(this, "loadout"));
+        }
 
         var missionCmd = getCommand("mission");
-        missionCmd.setExecutor(new MissionCommand(this));
-        missionCmd.setTabCompleter(new WFTabCompleter(this, "mission"));
+        if (missionCmd != null) {
+            missionCmd.setExecutor(new MissionCommand(this));
+            missionCmd.setTabCompleter(new WFTabCompleter(this, "mission"));
+        }
 
         var voteCmd = getCommand("vote");
-        voteCmd.setExecutor(new VoteCommand(this));
-        voteCmd.setTabCompleter(new WFTabCompleter(this, "vote"));
+        if (voteCmd != null) {
+            voteCmd.setExecutor(new VoteCommand(this));
+            voteCmd.setTabCompleter(new WFTabCompleter(this, "vote"));
+        }
 
         var spectateCmd = getCommand("spectate");
-        spectateCmd.setExecutor(new SpectateCommand(this));
+        if (spectateCmd != null) {
+            spectateCmd.setExecutor(new SpectateCommand(this));
+        }
 
 
         // ─── リスナー ───

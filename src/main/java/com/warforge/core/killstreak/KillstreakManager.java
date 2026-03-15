@@ -55,10 +55,6 @@ public class KillstreakManager {
         streaks.put(player.getUniqueId(), 0);
     }
 
-    public void reset(UUID uuid) { streaks.remove(uuid); }
-
-    public int getStreak(UUID uuid) { return streaks.getOrDefault(uuid, 0); }
-
     private void announceStreak(Player player, int streak, KillstreakReward reward) {
         VersionAdapter.sendTitle(player, reward.color() + streak + " KILL STREAK", "&f" + reward.name(), 5, 40, 10);
         player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 0.8f, 1.5f);
@@ -88,7 +84,8 @@ public class KillstreakManager {
                 }, 5L);
             }
             case HEAL -> {
-                player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + 10));
+                double maxHealth = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+                player.setHealth(Math.min(maxHealth, player.getHealth() + 10));
                 player.addPotionEffect(new PotionEffect(resolvePotion("REGENERATION"), 100, 1));
                 player.sendMessage(Messages.INSTANCE.prefixed("&aHP回復！"));
             }
@@ -98,19 +95,27 @@ public class KillstreakManager {
                 Location target = (targetBlock != null && !targetBlock.getType().isAir())
                     ? targetBlock.getLocation()
                     : player.getLocation().add(player.getLocation().getDirection().multiply(30));
+
+                final org.bukkit.World world = target.getWorld();
+                if (world == null) return; // フォールバック: ワールドがない場合スキップ
+
                 for (int i = 0; i < 5; i++) {
                     final int delay = i * 5;
                     final Location loc = target.clone().add(
                         (Math.random() - 0.5) * 8, 0, (Math.random() - 0.5) * 8
                     );
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                        target.getWorld().strikeLightningEffect(loc);
-                        target.getWorld().createExplosion(loc, 0f, false, false);
-                        loc.getWorld().getNearbyEntities(loc, 3, 3, 3).forEach(e -> {
-                            if (e instanceof Player hit && !hit.equals(player)) {
-                                hit.damage(8.0, player);
-                            }
-                        });
+                        if (world != null) {
+                            world.strikeLightningEffect(loc);
+                            world.createExplosion(loc, 0f, false, false);
+                        }
+                        if (loc.getWorld() != null) {
+                            loc.getWorld().getNearbyEntities(loc, 3, 3, 3).forEach(e -> {
+                                if (e instanceof Player hit && !hit.equals(player)) {
+                                    hit.damage(8.0, player);
+                                }
+                            });
+                        }
                     }, delay);
                 }
             }
@@ -135,10 +140,16 @@ public class KillstreakManager {
     private PotionEffectType resolvePotion(String... names) {
         for (String n : names) {
             try {
+                // Try modern Bukkit API (1.20.5+)
                 PotionEffectType t = PotionEffectType.getByName(n);
                 if (t != null) return t;
             } catch (Exception ignored) {}
         }
+        // Fallback to SPEED if all failed
+        try {
+            PotionEffectType t = PotionEffectType.getByName("SPEED");
+            if (t != null) return t;
+        } catch (Exception ignored) {}
         return PotionEffectType.SPEED;
     }
 
